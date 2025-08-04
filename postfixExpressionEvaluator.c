@@ -40,13 +40,23 @@ void displayStack()
 }
 int calculateExp(char exp[])
 {
-    int a, b;
+    int a, b, temp;
     char op;
     for (int x = 0; x < strlen(exp); x++)
     {
         if (isdigit(exp[x]))
         {
-            push(exp[x] - '0');
+            temp = 0;
+            while(exp[x]!=' ')
+            {
+                temp = temp * 10 + (exp[x]-'0'); 
+                x++;
+            }
+            push(temp);
+        }
+        else if(exp[x]==' ')
+        {
+            continue;
         }
         else
         {
@@ -87,6 +97,6 @@ int main()
 {
     char expression[100];
     printf("Enter the expression: ");
-    scanf("%s", expression);
+    scanf("%[^\n]", expression);
     printf("The evaluated answer is %d", calculateExp(expression));
 }
