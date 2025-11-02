@@ -1,6 +1,6 @@
 //Implementing circular queue using arrays
 #include <stdio.h>
-#define N 100 // size of the array
+#define N 5 // size of the array
 typedef struct circularQueue
 {
     int data[N];
@@ -12,8 +12,11 @@ void initialise(CQ *q)
 }
 void enQueue(CQ *q, int val)
 {
-    if (++q->rear != q->front)
-        q->data[(q->rear) % N] = val;
+    if ((q->rear+1)%N != q->front)
+    {
+        q->rear = (q->rear+1)%N;
+        q->data[(q->rear)% N] = val;
+    }
     else
         printf("The queue is full\n");
 
@@ -37,9 +40,12 @@ void display(CQ q)
         return;
     }
     printf("The elements in the queue are\n");
-    for (int x = q.front; x <= q.rear; x = (x + 1) % N)
+    for (int x = q.front; x <= q.rear && x>=q.front;  )
     {
         printf("%d ", q.data[x]);
+        
+        if( (x = (x + 1) % N ) == q.front)
+            break; 
     }
     printf("\n");
 }
